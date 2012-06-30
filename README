@@ -58,8 +58,12 @@ Loading required package: grid
  3rd Qu.:1.5   3rd Qu.:0.1561  
  Max.   :2.0   Max.   :0.1691 
 
+See training output images created in ./img/iters.png and ./img/error.png
+
 CLUSTERING TESTS
 ================
+
+Example test run on data set with 3 features, 100 points per cluster, with 4 clusters.
 
 > ./test.py > ./output/test.csv
 ...
@@ -99,3 +103,9 @@ Loading required package: grid
  dp-means:19  
  k-means :14  
 
+See ./img/test_errors.png and ./img/test_times.png for comparative error and times
+for k-means and dp-means.
+
+NOTE: lambda is chosen based on relevant scale of the data. In this example, the data set
+was created to fall between -5 and 5, so the range is 10.  The maximum lambda is there 10, 
+while the smallest lambda could be chosen as the smallest expected cluster size.  
