@@ -13,6 +13,10 @@ sdist
 develop-eggs
 .installed.cfg
 
+# output files
+*_error.csv
+*_result.csv
+
 # Installer logs
 pip-log.txt
 

@@ -7,12 +7,15 @@ import timer
 #filename="input/c3_s20_f2.csv"
 filename="input/c4_s100_f3.csv"
 iters = 100
+maxClusters = 15
+dataSpread = 10.0
 
+# Read data
 res = []
 for row in csv.reader(open(filename,"rb")):
 	res.append([float(x) for x in row])
 
-
+# write results
 def writeFile( postfix, k):
 	fn = filename.split('/')[-1]
 	fn += "_" + str(postfix)
@@ -23,7 +26,7 @@ def writeFile( postfix, k):
 	for x in k.getErrors():
 		eWrtr.writerow(x)
 
-for c in range(1,20):
+for c in range(1,maxClusters):
 	k1 = cluster.kmeans(res, c)
 	minError = sys.maxint
 	with timer.Timer():
@@ -34,7 +37,7 @@ for c in range(1,20):
 				writeFile("k-%d-%f1.4"%(c,err), k1)
 		print 'k-means,',c,',',minError,',',
 				
-for l in [x * 0.5 for x in range(1, 20)]:
+for l in [dataSpread/i**0.9 for i in range(1, 20)]:
 	k1 = cluster.dpmeans(res, l)
 	minError = sys.maxint
 	with timer.Timer():

@@ -3,7 +3,7 @@
 library(ggplot2)
 library(gridExtra)
 
-X <- read.delim("./test.csv", sep=",", header=FALSE)
+X <- read.delim("./output/test.csv", sep=",", header=FALSE)
 X$method <- as.factor(X$V1)
 summary(X)
 
