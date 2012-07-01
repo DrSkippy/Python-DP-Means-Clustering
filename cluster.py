@@ -2,6 +2,7 @@
 from pprint import pprint
 import sys
 import random
+import math
 import timer
 
 class kmeans(object):
@@ -39,7 +40,7 @@ class kmeans(object):
 		cmin = sys.maxint
 		cidx = -sys.maxint
 		for j in self.clusters:
-			dist = self.dSquared(x, self.clusters[j])
+			dist = math.sqrt(self.dSquared(x, self.clusters[j]))
 			if dist < cmin:  # record closest centroid
 				cmin = dist
 				cidx = j
