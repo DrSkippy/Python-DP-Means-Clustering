@@ -15,10 +15,19 @@ p <-ggplot(data=X, aes(V2,V3)) +
 	ylab("Error") 
 ggsave(file="./img/test_errors.png", width=5, height=4, dpi=100)
 
-
 p1 <-ggplot(data=X, aes(V2, V4)) + 
 	geom_point(aes(color = method)) +
 	geom_line(aes(color = method)) +  
 	xlab("Parameter") +
 	ylab("Time") 
 ggsave(file="./img/test_times.png", width=5, height=4, dpi=100)
+
+p2 <-ggplot(data=X, aes(V3, V4)) + 
+	geom_point(aes(color = method)) +
+	geom_line(aes(color = method)) +  
+	scale_y_log10() + 
+	scale_x_log10() + 
+	xlab("Error") +
+	ylab("Time") 
+ggsave(file="./img/test_times-error.png", width=5, height=4, dpi=100)
+

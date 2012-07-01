@@ -19,6 +19,7 @@ summary(Y)
 p1 <-ggplot(aes(V1, V2), data=Y) +
 	geom_point(color = "blue") +
 	geom_line(color = "blue") +
+	scale_y_log10() + 
 	xlab("Iteration") +
 	ylab("Norm Error")
 ggsave(file="./img/error.png", width=4, height=4, dpi=100)
