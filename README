@@ -65,7 +65,7 @@ CLUSTERING TESTS
 
 Example test run on data set with 3 features, 100 points per cluster, with 4 clusters.
 
-> ./test.py > ./output/test.csv
+> ./test.py | tee output/test.all.csv | grep -v Inter > output/test.csv
 ...
 Tolerance reached at step 1
 Iterations completed: 1
