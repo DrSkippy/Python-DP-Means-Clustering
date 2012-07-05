@@ -4,13 +4,18 @@ import sys
 import csv
 import math
 import timer
+from optparse import OptionParser
+parser = OptionParser()
+parser.add_option("-f", "--file", dest="file", default="./input/c5_s100_f3.csv",
+                 help="Input file name")
+parser.add_option("-i", "--iterations", dest="iter", default=20,
+                 help="Iterations to use in searching for min error. Default 20.")
+(options, args) = parser.parse_args()
 
-#filename="input/c3_s20_f2.csv"
-#filename="input/c4_s100_f3.csv"
-filename="input/c5_s100_f3.csv"
-iters = 5
+filename = options.file
+iters = int(options.iter)
+
 maxClusters = 12
-dataSpread = 10.0
 
 # Read data
 res = []

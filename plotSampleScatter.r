@@ -3,7 +3,7 @@
 library(ggplot2)
 library(gridExtra)
 
-X <- read.delim("./input/c4_s100_f3.csv", sep=",", header=FALSE)
+X <- read.delim("./input/c5_s100_f3.csv", sep=",", header=FALSE)
 summary(X)
 
 p1 <-ggplot(data=X, aes(V1,V2)) + 

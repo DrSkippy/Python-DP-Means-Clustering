@@ -24,7 +24,8 @@ ggsave(file="./img/test_times.png", width=5, height=4, dpi=100)
 
 p2 <-ggplot(data=X, aes(V3, V4)) + 
 	geom_point(aes(color = method)) +
-	geom_line(aes(color = method)) +  
+	#geom_line(aes(color = method)) +  
+	geom_smooth(aes(V3, V4, color=method), method = "lm") + 
 	scale_y_log10() + 
 	scale_x_log10() + 
 	xlab("Error") +
