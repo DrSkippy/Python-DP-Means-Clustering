@@ -23,7 +23,17 @@ Options:
                         specified
   -l LAM, --lamda=LAM   If preset, use dpmeans with lambda parameters
                         specified
+  -x XVAL, --cross-validate=XVAL
+                        Number of records to hold out for cross validations.
+                        Data will be random-ordered for you.
+  -s, --cross-validate-stop
+                        Stop when cross-validation error rises.
 
+> cat input/c3_s20_f2.csv | ./cluster.py -k2
+Tolerance reached at step 8
+Iterations completed: 8
+Final error: 2.994711
+elapsed time: 6.582022 ms
 
 > cat input/c3_s20_f2.csv | ./cluster.py -k2
 Tolerance reached at step 3
@@ -37,7 +47,14 @@ Iterations completed: 4
 Final error: 0.520926
 elapsed time: 5.388021 ms
 
-To plot errors for the last run (dp-means in this case),
+> cat input/c3_s20_f2.csv | ./cluster.py -l5
+Tolerance reached at step 2
+Iterations completed: 2
+Final error: 2.994711
+elapsed time: 2.490044 ms
+
+To plot errors for the last run (dp-means in this case), use "plotResult.r"
+This script reads ./output/results.csv and ./output/error.csv.
 
 > ./plotResult.r 
 Loading required package: methods
@@ -58,6 +75,30 @@ Loading required package: grid
  Max.   :4   Max.   :1.0860  
 
 See training output images created in ./img/iters.png and ./img/error.png
+
+CREATE TEST DATA
+================
+> ./createTestData.py -h
+Usage: createTestData.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -s SAMPLE, --sample-size=SAMPLE
+                        Sample size per cluster
+  -f FEATURES, --features=FEATURES
+                        Number of features
+  -c CLUSTERS, --clusters=CLUSTERS
+                        Sample size
+  -o OVERLAP, --overlap=OVERLAP
+                        0 - distinct, 1 - scale = sig
+
+> ./createTestData.py -s6 -c1 -f3
+2.80484810546906,-5.107337369680055,1.7687444192348534
+4.045291632153071,-4.955840347993885,1.5936351799326172
+3.503220395140305,-5.008280722637208,1.5695863487866264
+3.2134872837791812,-4.809839458886229,1.3158740999089755
+3.8383496901618197,-4.745260338782687,1.74511375801971
+3.3736868708580805,-5.2559718245077045,1.4113521104252063
 
 CLUSTERING TESTS
 ================
