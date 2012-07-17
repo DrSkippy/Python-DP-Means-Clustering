@@ -16,6 +16,7 @@ develop-eggs
 # output files
 *_error.csv
 *_result.csv
+test.*.csv
 
 # Installer logs
 pip-log.txt
