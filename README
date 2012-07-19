@@ -76,6 +76,27 @@ Loading required package: grid
 
 See training output images created in ./img/iters.png and ./img/error.png
 
+OPTIMAL DP-MEANS
+================
+Finds the optimal value of lambda only from data.
+
+cat input/c4_s300_f2.csv | ./DPopt.py
+
+...
+Final error: 18.510049
+Final cross-validation error: 18.223702
+Tolerance reached at step 6
+Iterations completed: 6
+Final error: 14.329098
+Final cross-validation error: 14.262425
+lambda: 5.48775
+  with error: 14.26242
+
+Code holds back 20% of data for training optimization.
+
+There are no parameters to set unless you anticipate more than the default max
+number of clusters (set in code).
+
 CREATE TEST DATA
 ================
 > ./createTestData.py -h
