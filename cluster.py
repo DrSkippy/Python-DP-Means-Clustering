@@ -116,7 +116,7 @@ class kmeans(object):
 		sys.stderr.write("Final cross-validation error: %f\n"%prevXVal)
 		# This is a step past stop if using cross-validation...
 		self.output("Final")
-		return err
+		return err, errXVal
 
 	def output(self, iter):
 		for i in range(0,self.size):
@@ -153,6 +153,10 @@ class dpmeans(kmeans):
 		# don't create new clusters on cross-validation data
 		for i in range(self.size, self.allSize):
 			self.dataClusterId[i], dmin = self.nearestCluster(self.X[i])
+
+	def error(self):
+		err, xValErr = kmeans.error(self)
+		return err + self.lam * self.k, xValErr + self.lam * self.k
 
 
 if __name__ == '__main__':

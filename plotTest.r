@@ -2,30 +2,33 @@
 
 library(ggplot2)
 library(gridExtra)
+library(reshape2)
 
 X <- read.delim("./output/test.csv", sep=",", header=FALSE)
-X$method <- as.factor(X$V1)
+colnames(X) <- c("mthd","parameter","error","time")
+X$method <- as.factor(X$mthd)
+
 summary(X)
 
-p <-ggplot(data=X, aes(V2,V3)) + 
-	geom_point(aes(color = method)) +
-	geom_line(aes(color= method)) +
+p <-ggplot(data=X, aes(parameter, error)) + 
+	geom_point(aes(color=method)) +
+	geom_line(aes(color=method)) +
 	scale_y_log10() + 
 	xlab("Parameter") +
-	ylab("Error") 
+	ylab("Normalized Error") 
 ggsave(file="./img/test_errors.png", width=5, height=4, dpi=100)
 
-p1 <-ggplot(data=X, aes(V2, V4)) + 
+p1 <-ggplot(data=X, aes(parameter, time)) + 
 	geom_point(aes(color = method)) +
 	geom_line(aes(color = method)) +  
 	xlab("Parameter") +
 	ylab("Time") 
 ggsave(file="./img/test_times.png", width=5, height=4, dpi=100)
 
-p2 <-ggplot(data=X, aes(V3, V4)) + 
+p2 <-ggplot(data=X, aes(error, time)) + 
 	geom_point(aes(color = method)) +
 	#geom_line(aes(color = method)) +  
-	geom_smooth(aes(V3, V4, color=method), method = "lm") + 
+	geom_smooth(aes(color=method), method = "lm") + 
 	scale_y_log10() + 
 	scale_x_log10() + 
 	xlab("Error") +

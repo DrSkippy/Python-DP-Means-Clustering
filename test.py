@@ -4,9 +4,11 @@ import sys
 import csv
 import math
 import timer
+import random
 from optparse import OptionParser
 parser = OptionParser()
-parser.add_option("-f", "--file", dest="file", default="./input/c5_s100_f3.csv",
+
+parser.add_option("-f", "--file", dest="file", default="./input/c4_s300_f2.csv",
                  help="Input file name")
 parser.add_option("-i", "--iterations", dest="iter", default=20,
                  help="Iterations to use in searching for min error. Default 20.")
@@ -15,7 +17,7 @@ parser.add_option("-i", "--iterations", dest="iter", default=20,
 filename = options.file
 iters = int(options.iter)
 
-maxClusters = 12
+maxClusters = 10
 
 # Read data
 res = []
@@ -47,28 +49,36 @@ def writeFile( postfix, k):
 	for x in k.getErrors():
 		eWrtr.writerow(x)
 
+# make sure data is in random order
+random.shuffle(res)
+# 20 percent set aside for cross-validation
+xval = int(0.20*len(res))
+
 for c in range(1,maxClusters+1):
 	minError = sys.maxint
 	with timer.Timer():
 		for i in range(0,iters):
-			k1 = cluster.kmeans(res, c)
-			err = k1.run()
-			if err < minError:
-				minError = err
+			k1 = cluster.kmeans(res, c, xval)
+			err, xerr = k1.run()
+			if xerr < minError:
+				minError = xerr
 				writeFile("k-%d-%f1.4"%(c,err), k1)
 			print 'k-means,',i,',',c,',',minError,',Inter'
 			sys.stderr.write("kmeans clusters: %d iter: %d \n"%(c,i))
 		print 'k-means,',c,',',minError,',',
-				
-for l in [(math.sqrt(nFeatures) * dataSpread)/i for i in range(1, maxClusters+1)]:
+
+minl = math.log(0.9)
+maxl = math.log(math.sqrt(2.0) * dataSpread)
+dl = (maxl-minl)/float(maxClusters)
+for l in [math.exp(minl + i*dl) for i in range(0, 2*maxClusters)]:
 	minError = sys.maxint
 	with timer.Timer():
 		for i in range(0,iters):
-			k1 = cluster.dpmeans(res, l)
-			err = k1.run()
-			if err < minError:
-				minError = err
+			k1 = cluster.dpmeans(res, l, xval)
+			err, xerr = k1.run()
+			if xerr < minError:
+				minError = xerr
 				writeFile("k-%d-%f1.4"%(c,err), k1)
-			print 'dp-means,',i,',',dataSpread/l,',',minError,',Inter'
+			print 'dp-means,',i,',',l,',',minError,',Inter'
 			sys.stderr.write("dpmeans lambda: %2.5f iter: %d \n"%(c,i))
-		print 'dp-means,',dataSpread/l,',',minError,',',
+		print 'dp-means,',l,',',minError,',',
